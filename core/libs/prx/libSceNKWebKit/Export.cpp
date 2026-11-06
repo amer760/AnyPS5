@@ -18014,10 +18014,6 @@ int APS5_VABI _ZN3WTF11setDataFileEPKc() {
     NotImplemented_nid_no_patch(__func__);
 }
 
-int APS5_VABI _ZN3WTF11setNonBlockEi() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
 int APS5_VABI _ZN3WTF12CountingLock10unlockSlowEv() {
     NotImplemented_nid_no_patch(__func__);
 }
@@ -18359,10 +18355,6 @@ int APS5_VABI _ZN3WTF14createIteratorENS_10StringViewE() {
 }
 
 int APS5_VABI _ZN3WTF14dataLogFStringEPKc() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
-int APS5_VABI _ZN3WTF14dupCloseOnExecEi() {
     NotImplemented_nid_no_patch(__func__);
 }
 

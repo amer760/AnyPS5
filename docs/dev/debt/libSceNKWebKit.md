@@ -11,6 +11,8 @@ Inventory prose retains historical counts; use the [generated progress report](h
 
 - [FastBitVector exports](../../../core/libs/prx/libSceNKWebKit/src/WtfFastBitVector.cpp) have no console ABI or behavior verification. The 16-byte owner (word pointer at 0, 64-bit bit count at 8), range clearing, growth and copying follow the paired header and [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WTF/wtf/FastBitVector.cpp). `resizeSlow` preserves the stored bit count and unused bits of existing words; new words are zeroed. Allocation uses the module's `fastMalloc` and `fastFree`. Invalid ranges, null accessed storage, shrinking the word count and overflowing the upstream round-up throw instead of reproducing assertion failures or invalid memory access. Closes when: compared with a console module.
 
+- [setNonBlock and dupCloseOnExec](../../../core/libs/prx/libSceNKWebKit/src/WtfUniStdExtras.cpp) follow the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WTF/wtf/unix/UniStdExtrasUnix.cpp) on the guest `fcntl`, `dup` and `close` of libkernel; whether the console build defines `F_DUPFD_CLOEXEC`, and so tries it before `dup`, is not verified. `setNonBlock` passes `F_GETFL`'s `-1` on to `F_SETFL` as WebKit does. Closes when: compared with a console module.
+
 - [PAL::SessionID exports](../../../core/libs/prx/libSceNKWebKit/src/PalSessionID.cpp) have no console ABI or behavior verification. They follow the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WebCore/PAL/pal/SessionID.cpp). The generators throw after `enableGenerationProtection` instead of reproducing the `RELEASE_ASSERT` crash. Closes when: compared with a console module.
 - [bmalloc::FreeList exports](../../../core/libs/prx/libSceNKWebKit/src/BmallocFreeList.cpp) have no console ABI or behavior verification. The 32-byte layout and field writes follow the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/bmalloc/bmalloc/FreeList.cpp), which compiles only without libpas; that the console build has libpas off is inferred from the PlayStation build options and the exported symbols. A null `self` throws instead of reproducing invalid memory access. Closes when: compared with a console module.
 
@@ -1456,7 +1458,6 @@ Inventory prose retains historical counts; use the [generated progress report](h
 | `_ZN3WTF11ThreadGroupD2Ev` | `6L90iL-CjWA` |
 | `_ZN3WTF11TimingScope11scopeDidEndEv` | `vNFWwy493LY` |
 | `_ZN3WTF11setDataFileEPKc` | `mxYK3TBPDro` |
-| `_ZN3WTF11setNonBlockEi` | `ZH232ViZnko` |
 | `_ZN3WTF12CountingLock10unlockSlowEv` | `y9CL7tutRKQ` |
 | `_ZN3WTF12CountingLock8lockSlowEv` | `QSRjO+sqoFU` |
 | `_ZN3WTF13MetaAllocator17addFreshFreeSpaceEPvm` | `RPLKRR7vgYE` |
@@ -1543,7 +1544,6 @@ Inventory prose retains historical counts; use the [generated progress report](h
 | `_ZN3WTF14aboutSrcDocURLEv` | `Mw84qLwnIs4` |
 | `_ZN3WTF14createIteratorENS_10StringViewE` | `svIkqWCw-LU` |
 | `_ZN3WTF14dataLogFStringEPKc` | `xQQ4VSubx-k` |
-| `_ZN3WTF14dupCloseOnExecEi` | `wQ9-tXakN90` |
 | `_ZN3WTF15AtomStringTableD1Ev` | `YHjoCx7QaOs` |
 | `_ZN3WTF15AtomStringTableD2Ev` | `JxkGFAxlPa8` |
 | `_ZN3WTF15AutomaticThread14threadDidStartEv` | `WgCZ0HyfQ3I` |
