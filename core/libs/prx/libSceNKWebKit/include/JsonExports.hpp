@@ -47,6 +47,10 @@ NKWebKit::JsonAbi::Ref<NKWebKit::JsonAbi::Value> APS5_VABI _ZNK3WTF8JSONImpl9Arr
 const NKWebKit::JsonAbi::Ref<NKWebKit::JsonAbi::Value>* APS5_VABI _ZNK3WTF8JSONImpl9ArrayBase5beginEv(const NKWebKit::JsonAbi::ArrayBase* self);
 void APS5_VABI _ZNK3WTF8JSONImpl5Value9writeJSONERNS_13StringBuilderE(const NKWebKit::JsonAbi::Value* self, NKWebKit::WtfAbi::StringBuilder& output);
 NKWebKit::WtfAbi::String APS5_VABI _ZNK3WTF8JSONImpl5Value12toJSONStringEv(const NKWebKit::JsonAbi::Value* self);
+NKWebKit::JsonAbi::Ref<NKWebKit::JsonAbi::Object> APS5_VABI _ZN3WTF8JSONImpl6Object6createEv();
+void APS5_VABI _ZN3WTF8JSONImpl10ObjectBase6removeERKNS_6StringE(NKWebKit::JsonAbi::ObjectBase* self, const NKWebKit::WtfAbi::String& name);
+bool APS5_VABI _ZNK3WTF8JSONImpl10ObjectBase9getStringERKNS_6StringERS2_(const NKWebKit::JsonAbi::ObjectBase* self, const NKWebKit::WtfAbi::String& name, NKWebKit::WtfAbi::String& output);
+std::size_t APS5_VABI _ZNK3WTF8JSONImpl10ObjectBase10memoryCostEv(const NKWebKit::JsonAbi::ObjectBase* self);
 void APS5_VABI _ZNK3WTF8JSONImpl9ArrayBase9writeJSONERNS_13StringBuilderE(const NKWebKit::JsonAbi::ArrayBase* self, NKWebKit::WtfAbi::StringBuilder& output);
 
 }

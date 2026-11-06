@@ -45,7 +45,8 @@ Inventory prose retains historical counts; use the [generated progress report](h
 - [Media and playback engine stubs](../../../core/libs/prx/libSceNKWebKit/src/Media.cpp) (libSceNKWebKit) - WebCore::MediaPlayer, HTMLMediaElement::fastSeek, TextTrackCueGeneric::create, MediaTime::toJSONObject, MediaTime::toJSONString, MediaTime::toString, MediaTimeRange::toJSONString, and dump(PrintStream&) exports remain throwing stubs in Export.cpp because they require the WebCore playback pipeline, DOM/engine objects, JSON object model, or PrintStream runtime.
 - [WebCore MIME type cache and media queries](../../../core/libs/prx/libSceNKWebKit/src/Mime.cpp) (libSceNKWebKit) - WebCore::MIMETypeCache and WebCore::MIMETypeRegistry exports (supportedMediaMIMETypes, isSupportedMediaMIMEType, supportedNonImageMIMETypes, canShowMIMEType, extensionsForMIMEType, allowedFileExtensions) throw through NotImplemented_nid_no_patch; media decoding capabilities and container support require the PlayStation media player library (mediaplayer.sprx), extensionsForMIMEType is unimplemented upstream on PlayStation (ASSERT_NOT_IMPLEMENTED_YET), and unpinned WTF hash table runtime structures.
 - [Calculated length ref-counting](../../../core/libs/prx/libSceNKWebKit/Export.cpp) (libSceNKWebKit) - WebCore::Length::ref and WebCore::Length::deref throw through NotImplemented_nid_no_patch; they manage ref-counts in the WebCore style engine's global CalculationValueMap, whose internal runtime state is not initialized or pinned.
-- [JSON serialisation](../../../core/libs/prx/libSceNKWebKit/src/WtfJson.cpp) (libSceNKWebKit) - `Value::writeJSON`, `ArrayBase::writeJSON` and `Value::toJSONString` follow the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WTF/wtf/JSONValues.cpp); console output is unverified. Numbers are written from the shortest round-trip digits of `std::to_chars` in the ECMAScript layout of double-conversion's `ToShortest`; agreement with the console's double-conversion is not checked. `Value::writeJSON` on a plain `Value` of object or array type throws where WebKit reaches `ASSERT_NOT_REACHED`. Objects cannot be serialised while `Object::create` throws.
+- [JSON serialisation](../../../core/libs/prx/libSceNKWebKit/src/WtfJson.cpp) (libSceNKWebKit) - `Value::writeJSON`, `ArrayBase::writeJSON` and `Value::toJSONString` follow the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WTF/wtf/JSONValues.cpp); console output is unverified. Numbers are written from the shortest round-trip digits of `std::to_chars` in the ECMAScript layout of double-conversion's `ToShortest`; agreement with the console's double-conversion is not checked. `Value::writeJSON` on a plain `Value` of object or array type throws where WebKit reaches `ASSERT_NOT_REACHED`.
+- [JSON objects](../../../core/libs/prx/libSceNKWebKit/src/WtfJsonObject.cpp) (libSceNKWebKit) - the `HashMap<String, Ref<Value>>` table that inline guest `setValue` shares is not compared with a console module. It follows the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WTF/wtf/HashTable.h): a `fastMalloc` block with deleted count, key count, size mask and size before the buckets, quadratic probing from `StringImpl::hash`, at least 8 buckets, growth at 3/4 load up to 1024 buckets and 1/2 above, shrinking below 1/6. The object vtable has no RTTI, so a guest `dynamic_cast` is unsupported. A null object, another value type, a null key or invalid table counts throw.
 - [Filter operations](../../../core/libs/prx/libSceNKWebKit/Export.cpp) (libSceNKWebKit) - the `WebCore::FilterOperation` subclasses (Default, Blur, DropShadow, InvertLightness, BasicColorMatrix, BasicComponentTransfer) stay stubs: their objects are dispatched through the module's own vtables, which this library does not provide.
 
 ### Known export names; ABI prototypes unverified
@@ -1736,8 +1737,6 @@ Inventory prose retains historical counts; use the [generated progress report](h
 | `_ZN3WTF8CollatorC2EPKcb` | `jPO4DqIdSig` |
 | `_ZN3WTF8CollatorD1Ev` | `YyCzoJifhqg` |
 | `_ZN3WTF8CollatorD2Ev` | `E3vh3HLyXrI` |
-| `_ZN3WTF8JSONImpl10ObjectBase6removeERKNS_6StringE` | `nIH6ALR8JYA` |
-| `_ZN3WTF8JSONImpl6Object6createEv` | `Ceq8ieFRG+0` |
 | `_ZN3WTF8WordLock10unlockSlowEv` | `MffI7wLS6TM` |
 | `_ZN3WTF8WordLock8lockSlowEv` | `Acl7E8U+V44` |
 | `_ZN3WTF8dataFileEv` | `iZD+UvpXBfg` |
@@ -5300,8 +5299,6 @@ Inventory prose retains historical counts; use the [generated progress report](h
 | `_ZNK3WTF7Seconds4dumpERNS_11PrintStreamE` | `hrTPOtnC7Mw` |
 | `_ZNK3WTF8Collator11collateUTF8EPKcS2_` | `Ds3V4AkI+J4` |
 | `_ZNK3WTF8Collator7collateENS_10StringViewES1_` | `g46lcz7ehyY` |
-| `_ZNK3WTF8JSONImpl10ObjectBase10memoryCostEv` | `MnJYzxTchUY` |
-| `_ZNK3WTF8JSONImpl10ObjectBase9getStringERKNS_6StringERS2_` | `uoSZQi-ImGo` |
 | `_ZNK3WTF8WallTime4dumpERNS_11PrintStreamE` | `BXpm0S4olVo` |
 | `_ZNK3WTF9BitVector11isEmptySlowEv` | `aPI3JqrIPEw` |
 | `_ZNK3WTF9BitVector12bitCountSlowEv` | `IzXg6-zWJ5E` |

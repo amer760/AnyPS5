@@ -194,6 +194,8 @@ struct ArrayBase : Value {
 
 struct Array : ArrayBase {};
 
+void ObjectSetValue(ObjectBase* self, const NKWebKit::WtfAbi::String& name, Ref<Value>&& value);
+
 static_assert(sizeof(ValueType) == 4);
 static_assert(sizeof(Ref<Value>) == 8);
 static_assert(alignof(Ref<Value>) == 8);
