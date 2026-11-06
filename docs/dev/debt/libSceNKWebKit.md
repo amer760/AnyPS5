@@ -11,6 +11,8 @@ Inventory prose retains historical counts; use the [generated progress report](h
 
 - [FastBitVector exports](../../../core/libs/prx/libSceNKWebKit/src/WtfFastBitVector.cpp) have no console ABI or behavior verification. The 16-byte owner (word pointer at 0, 64-bit bit count at 8), range clearing, growth and copying follow the paired header and [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WTF/wtf/FastBitVector.cpp). `resizeSlow` preserves the stored bit count and unused bits of existing words; new words are zeroed. Allocation uses the module's `fastMalloc` and `fastFree`. Invalid ranges, null accessed storage, shrinking the word count and overflowing the upstream round-up throw instead of reproducing assertion failures or invalid memory access. Closes when: compared with a console module.
 
+- [ReadWriteLock exports](../../../core/libs/prx/libSceNKWebKit/src/WtfReadWriteLock.cpp) and [WTF::sleep(Seconds)](../../../core/libs/prx/libSceNKWebKit/src/WtfTime.cpp) do not park on `ParkingLot`: the lock byte spins with `std::this_thread::yield`, then 50 microsecond sleeps, the `Condition` byte is never written and waiters poll instead of being notified; a lock byte with the parked bit set throws. `sleep` returns at once for zero, negative and NaN durations and sleeps in one-day steps, forever for infinity. The 12-byte layout and writer preference follow the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WTF/wtf/ReadWriteLock.cpp) and are not compared with a console module. A null lock, `readUnlock` without a reader and count overflows throw.
+
 - [PAL::SessionID exports](../../../core/libs/prx/libSceNKWebKit/src/PalSessionID.cpp) have no console ABI or behavior verification. They follow the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/WebCore/PAL/pal/SessionID.cpp). The generators throw after `enableGenerationProtection` instead of reproducing the `RELEASE_ASSERT` crash. Closes when: compared with a console module.
 - [bmalloc::FreeList exports](../../../core/libs/prx/libSceNKWebKit/src/BmallocFreeList.cpp) have no console ABI or behavior verification. The 32-byte layout and field writes follow the [PS5 11.x WebKit source](https://github.com/neonmodder123/PS5-WebKit-11.x/blob/80f77e94c63ee7202eec3d4b5b1a021dd89011ba/Source/bmalloc/bmalloc/FreeList.cpp), which compiles only without libpas; that the console build has libpas off is inferred from the PlayStation build options and the exported symbols. A null `self` throws instead of reproducing invalid memory access. Closes when: compared with a console module.
 
@@ -1469,10 +1471,6 @@ Inventory prose retains historical counts; use the [generated progress report](h
 | `_ZN3WTF13MetaAllocatorC2ERNS_4LockEmm` | `7GF7CfOKTBw` |
 | `_ZN3WTF13MetaAllocatorD0Ev` | `bWPSP8A71Rk` |
 | `_ZN3WTF13MetaAllocatorD2Ev` | `55-0EcgDmz8` |
-| `_ZN3WTF13ReadWriteLock10readUnlockEv` | `yPRGiJGWA-4` |
-| `_ZN3WTF13ReadWriteLock11writeUnlockEv` | `trYWw7dUt9Y` |
-| `_ZN3WTF13ReadWriteLock8readLockEv` | `tbhRqP+K-1c` |
-| `_ZN3WTF13ReadWriteLock9writeLockEv` | `cKaXv3V+n+k` |
 | `_ZN3WTF13aboutBlankURLEv` | `3nmBMeZtd+Y` |
 | `_ZN3WTF13dumpCharacterERNS_11PrintStreamEc` | `rpsD9ynfjc0` |
 | `_ZN3WTF13normalizedNFCENS_10StringViewE` | `bgrxJM-HmMM` |
@@ -1699,7 +1697,6 @@ Inventory prose retains historical counts; use the [generated progress report](h
 | `_ZN3WTF5MutexC2Ev` | `ut8I892aPW8` |
 | `_ZN3WTF5MutexD1Ev` | `SVYZa9hbTh8` |
 | `_ZN3WTF5MutexD2Ev` | `WBxQfbet+nY` |
-| `_ZN3WTF5sleepENS_7SecondsE` | `gsFoqQ-R5js` |
 | `_ZN3WTF6String24numberToStringFixedWidthEdj` | `EIwwRbyxZTM` |
 | `_ZN3WTF6String28numberToStringFixedPrecisionEdjNS_29TrailingZerosTruncatingPolicyE` | `KtgcveZxnco` |
 | `_ZN3WTF6String28numberToStringFixedPrecisionEfjNS_29TrailingZerosTruncatingPolicyE` | `16H0tI43iL8` |

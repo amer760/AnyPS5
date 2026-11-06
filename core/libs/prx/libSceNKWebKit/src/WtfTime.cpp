@@ -300,6 +300,17 @@ void APS5_VABI _ZN3WTF5sleepERKNS_24TimeWithDynamicClockTypeE(const WTF::TimeWit
     }
 }
 
+void APS5_VABI _ZN3WTF5sleepENS_7SecondsE(WTF::Seconds value) {
+    if (std::isnan(value.m_value) || value.m_value <= 0.0) return;
+    constexpr double chunk = 86400.0;
+    double remaining = value.m_value;
+    while (remaining > 0.0) {
+        const double step = remaining < chunk ? remaining : chunk;
+        std::this_thread::sleep_for(std::chrono::duration<double>(step));
+        if (!std::isinf(remaining)) remaining -= step;
+    }
+}
+
 WTF::MonotonicTime APS5_VABI _ZNK3WTF7SecondsmiENS_13MonotonicTimeE(const WTF::Seconds* self, WTF::MonotonicTime other) {
     return WTF::MonotonicTime{self->m_value - other.m_value};
 }

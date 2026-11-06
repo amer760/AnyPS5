@@ -160,6 +160,7 @@ bool APS5_VABI _ZN3WTF5equalEPKNS_10StringImplEPKhj(const NKWebKit::WtfAbi::Stri
 bool APS5_VABI _ZN3WTF5equalEPKNS_10StringImplES2_(const NKWebKit::WtfAbi::StringImpl* a, const NKWebKit::WtfAbi::StringImpl* b);
 bool APS5_VABI _ZN3WTF5equalERKNS_10StringImplES2_(const NKWebKit::WtfAbi::StringImpl& a, const NKWebKit::WtfAbi::StringImpl& b);
 void APS5_VABI _ZN3WTF5sleepERKNS_24TimeWithDynamicClockTypeE(const WTF::TimeWithDynamicClockType& time);
+void APS5_VABI _ZN3WTF5sleepENS_7SecondsE(WTF::Seconds value);
 void APS5_VABI _ZN3WTF6Config17permanentlyFreezeEv();
 NKWebKit::WtfAbi::String APS5_VABI _ZN3WTF6String13fromCodePointEi(std::int32_t cp);
 NKWebKit::WtfAbi::String APS5_VABI _ZN3WTF6String26fromUTF8WithLatin1FallbackEPKhm(const unsigned char* data, std::size_t length);
