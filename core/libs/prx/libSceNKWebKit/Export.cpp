@@ -33407,18 +33407,6 @@ int APS5_VABI _ZNK3WTF8JSONImpl10ObjectBase9getStringERKNS_6StringERS2_() {
     NotImplemented_nid_no_patch(__func__);
 }
 
-int APS5_VABI _ZNK3WTF8JSONImpl5Value12toJSONStringEv() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
-int APS5_VABI _ZNK3WTF8JSONImpl5Value9writeJSONERNS_13StringBuilderE() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
-int APS5_VABI _ZNK3WTF8JSONImpl9ArrayBase9writeJSONERNS_13StringBuilderE() {
-    NotImplemented_nid_no_patch(__func__);
-}
-
 int APS5_VABI _ZNK3WTF8WallTime4dumpERNS_11PrintStreamE() {
     NotImplemented_nid_no_patch(__func__);
 }
