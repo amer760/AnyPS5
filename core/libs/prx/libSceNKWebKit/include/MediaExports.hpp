@@ -3,6 +3,7 @@
 #include "SceTypes.hpp"
 #include "prx/libc/include/general/VabiMacros.hpp"
 #include "prx/libSceNKWebKit/src/MediaTypes.hpp"
+#include "prx/libSceNKWebKit/src/WtfJsonTypes.hpp"
 #include <cstddef>
 #include <cstdint>
 
@@ -100,5 +101,10 @@ unsigned int APS5_VABI _ZNK7WebCore18PlatformTimeRanges6lengthEv(const WebCore::
 bool APS5_VABI _ZNK7WebCore18PlatformTimeRanges7containERKN3WTF9MediaTimeE(const WebCore::PlatformTimeRanges* self, const WTF::MediaTime& time);
 WTF::MediaTime APS5_VABI _ZNK7WebCore18PlatformTimeRanges7nearestERKN3WTF9MediaTimeE(const WebCore::PlatformTimeRanges* self, const WTF::MediaTime& time);
 WTF::MediaTime APS5_VABI _ZNK7WebCore18PlatformTimeRanges8durationEj(const WebCore::PlatformTimeRanges* self, unsigned int index);
+
+NKWebKit::WtfAbi::String APS5_VABI _ZNK3WTF9MediaTime8toStringEv(const WTF::MediaTime* self);
+NKWebKit::JsonAbi::Ref<NKWebKit::JsonAbi::Object> APS5_VABI _ZNK3WTF9MediaTime12toJSONObjectEv(const WTF::MediaTime* self);
+NKWebKit::WtfAbi::String APS5_VABI _ZNK3WTF9MediaTime12toJSONStringEv(const WTF::MediaTime* self);
+NKWebKit::WtfAbi::String APS5_VABI _ZNK3WTF14MediaTimeRange12toJSONStringEv(const WTF::MediaTimeRange* self);
 
 }

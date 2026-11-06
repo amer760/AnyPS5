@@ -65,12 +65,22 @@ static_assert(offsetof(MediaTime, m_timeFlags) == 12);
 static_assert(std::is_trivially_destructible_v<MediaTime>);
 static_assert(!std::is_trivially_copyable_v<MediaTime>);
 
+struct MediaTimeRange {
+    MediaTime start;
+    MediaTime end;
+};
+
+static_assert(sizeof(MediaTimeRange) == 32);
+static_assert(offsetof(MediaTimeRange, start) == 0);
+static_assert(offsetof(MediaTimeRange, end) == 16);
+
 } // namespace NKWebKit::MediaAbi
 
 namespace WTF {
 
 using NKWebKit::MediaAbi::NotNullTag;
 using NKWebKit::MediaAbi::MediaTime;
+using NKWebKit::MediaAbi::MediaTimeRange;
 
 } // namespace WTF
 
